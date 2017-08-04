@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ge Jiang, Yujiao Mai, and Ke-Hai Yuan" />
+
+<meta name="date" content="2017-08-03" />
+
+<title>Supplementary Materials to Measurement Invariance Via Equivalence Testing</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Supplementary Materials to “Measurement Invariance Via Equivalence Testing”</h1>
+<h4 class="author"><em>Ge Jiang, Yujiao Mai, and Ke-Hai Yuan</em></h4>
+<h4 class="date"><em>2017-08-03</em></h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The supplementary materials illustrate the use of the accompanying R package equaltestMI. The sample statistics from Table 1 of Lee and Al Otaiba (2015) are used as an example. The description of the data can be found in the original article and the results obtained from equaltestMI are discussed at length in the submitted article “Measurement Invariance Via Equivalence Testing”.</p>
+<p>The R package equaltestMI is available on CRAN and can be downloaded for use on any R platform with version higher than 3.1.0. Users can pass different arguments to the main function eqMI.main() to examine measurement invariance using the conventional multiple-group approach or equivalence testing approach. Under the framework of equivalence testing, users obtain the minimum tolerable size (T-size) and adjusted cutoff values to evaluate the goodness-of-fit of each invariance test. The projection method is also available for testing the equality of latent means.</p>
+<p></p>
+</div>
+<div id="part-1-r-script-for-obtaining-results-from-equivalence-testing-and-projection-method" class="section level2">
+<h2>Part 1: R Script for Obtaining Results from Equivalence Testing and Projection Method</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## load package
+<span class="kw">library</span>(equaltestMI)</code></pre></div>
+<p></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sample statistics where M1 and M2 are sample means, and Cov1 and Cov2 are sample covariance matrices;
+## group 1 = boys ineligible for free-reduced lunches
+## group 2 = boys eligible for free-reduced lunches
+
+<span class="co">#setwd(&quot;C:/research/equaltestMI&quot;)</span>
+Group1 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">'Group1.txt'</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+Group2 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">'Group2.txt'</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+Group1 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(Group1)
+Group2 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(Group2)
+M1 &lt;-<span class="st"> </span>Group1[<span class="dv">1</span>,]
+M2 &lt;-<span class="st"> </span>Group2[<span class="dv">1</span>,]
+Cov1 &lt;-<span class="st"> </span>Group1[<span class="dv">2</span>:<span class="dv">7</span>,]
+Cov2 &lt;-<span class="st"> </span>Group2[<span class="dv">2</span>:<span class="dv">7</span>,]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## lavaan model syntax
+model &lt;-<span class="st"> '</span>
+<span class="st">AlphabetKnowledge =~ Letter_Name+ Letter_Sound</span>
+<span class="st">PhonologicalAwareness =~ Blending + Elision</span>
+<span class="st">Spelling =~ Real_Words + Pseudo_Words</span>
+<span class="st">'</span></code></pre></div>
+<p></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## the results using equivalence testing and projection method
+## full R output will be presented in Part 3
+
+test &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), 
+    <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2),
+    <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">output =</span> <span class="st">'both'</span>, 
+    <span class="dt">quiet =</span> <span class="ot">FALSE</span>,  
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>, <span class="dt">bootstrap =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p></p>
+</div>
+<div id="part-2-sample-means-and-covariance-matrices-of-the-example-data" class="section level2">
+<h2>Part 2: Sample Means and Covariance Matrices of the Example Data</h2>
+<div id="sample-statistics-for-boys-ineligible-for-free-reduced-lunches-group-1" class="section level3">
+<h3>Sample statistics for boys ineligible for free-reduced lunches (group 1):</h3>
+<p>Sample means:</p>
+<pre><code>##  Letter_Name Letter_Sound     Blending      Elision   Real_Words 
+##        45.26        40.45        10.91         6.51        23.88 
+## Pseudo_Words 
+##        14.12</code></pre>
+<p>Sample Covariance Matrix:</p>
+<pre><code>##              Letter_Name Letter_Sound Blending Elision Real_Words
+## Letter_Name      207.360      159.097   32.589  25.805     61.776
+## Letter_Sound     159.097      280.228   42.888  36.748     76.123
+## Blending          32.589       42.888   18.233  10.713     19.051
+## Elision           25.805       36.748   10.713  20.070     20.372
+## Real_Words        61.776       76.123   19.051  20.372     73.616
+## Pseudo_Words      45.075       60.204   14.219  16.709     47.429
+##              Pseudo_Words
+## Letter_Name        45.075
+## Letter_Sound       60.204
+## Blending           14.219
+## Elision            16.709
+## Real_Words         47.429
+## Pseudo_Words       44.356</code></pre>
+<p></p>
+</div>
+<div id="sample-statistics-for-boys-eligible-for-free-reduced-lunches-group-2" class="section level3">
+<h3>Sample statistics for boys eligible for free-reduced lunches (group 2):</h3>
+<p>Sample means:</p>
+<pre><code>##  Letter_Name Letter_Sound     Blending      Elision   Real_Words 
+##        41.32        34.88         9.08         4.45        19.24 
+## Pseudo_Words 
+##        11.07</code></pre>
+<p>Sample Covariance Matrix:</p>
+<pre><code>##              Letter_Name Letter_Sound Blending Elision Real_Words
+## Letter_Name      295.840      232.200   38.996  20.174     67.593
+## Letter_Sound     232.200      324.000   43.164  22.824     77.954
+## Blending          38.996       43.164   19.010   9.260     23.428
+## Elision           20.174       22.824    9.260  10.049     15.254
+## Real_Words        67.593       77.954   23.428  15.254     64.320
+## Pseudo_Words      57.771       60.458   16.272  11.042     38.411
+##              Pseudo_Words
+## Letter_Name        57.771
+## Letter_Sound       60.458
+## Blending           16.272
+## Elision            11.042
+## Real_Words         38.411
+## Pseudo_Words       38.688</code></pre>
+<p></p>
+</div>
+</div>
+<div id="part-3-full-r-output-of-the-test-object-in-part-1" class="section level2">
+<h2>Part 3: Full R Output of the “test” object in Part 1</h2>
+<pre><code>## 
+##  ---------- Equality of Population Covariance Matrices under NHT ----------  
+## 
+##                Chisq Df       pvalue
+## fit.pop.cov 48.85006 21 0.0005261173
+## 
+##  -------- Chi-Square and Chi-Square-Difference Test under NHT  -------- 
+## 
+##                         Chisq Df   pvalue Chisq.diff Df.diff   pvalue
+## fit.pop.cov            48.850 21    0.001                            
+## fit.configural.g1       4.408  6    0.622                            
+## fit.configural.g2      10.641  6    0.100                            
+## fit.combine.groups     15.049 12                                     
+## fit.metric             20.033 15    0.171      4.984       3    0.173
+## fit.residuals          42.512 21    0.004     22.479       6    0.001
+## fit.varfactor          54.175 27    0.001     11.663       6    0.070
+## fit.scalar             23.732 18    0.164      3.699       3    0.296
+## fit.strong.means       41.066 21    0.006     17.334       3    0.001
+## fit.strict.residuals   45.968 24    0.004     22.237       6    0.001
+## fit.strict.means       63.630 27    0.000     17.662       3    0.001
+## 
+##  -------- T-size epsilon, RMSEA, and Adjusted Cutoff Values under ET -------- 
+## 
+##                      epsilon_t  RMESA_t   cut.01   cut.05   cut.08
+## fit.pop.cov              0.209    0.141    0.076    0.097    0.121
+## fit.configural.g1        0.028    0.097    0.116    0.133    0.157
+## fit.configural.g2        0.071    0.154    0.116    0.133    0.157
+## fit.metric               0.049    0.181    0.151    0.164    0.187
+## fit.residuals            0.140    0.216    0.116    0.133    0.157
+## fit.varfactor            0.078    0.161    0.116    0.133    0.157
+## fit.scalar               0.040    0.163    0.151    0.164    0.187
+## fit.strong.means         0.125    0.289    0.151    0.164    0.187
+## fit.strict.residuals     0.138    0.215    0.116    0.133    0.157
+## fit.strict.means         0.127    0.291    0.151    0.164    0.187
+##                        cut.10 goodness-of-fit
+## fit.pop.cov             0.139            poor
+## fit.configural.g1       0.175       excellent
+## fit.configural.g2       0.175            fair
+## fit.metric              0.205            fair
+## fit.residuals           0.175            poor
+## fit.varfactor           0.175        mediocre
+## fit.scalar              0.205           close
+## fit.strong.means        0.205            poor
+## fit.strict.residuals    0.175            poor
+## fit.strict.means        0.205            poor
+## 
+## 
+##  ---------- Means of Latent and Specific Factors by the Projection Method and under NHT ---------- 
+## 
+##                  Chisq Df       pvalue
+## fit.mvmean   22.388937  6 0.0010292258
+## fit.common   19.433784  3 0.0002223613
+## fit.specific  4.015386  3 0.2598074616
+## Validity Index is 0.9885648 
+## 
+##  ---------- Means of Latent and Specific Factors by the Projection Method and under ET ---------- 
+## 
+##              epsilon_t  RMESA_t   cut.01   cut.05   cut.08   cut.10
+## fit.mvmean       0.139    0.215    0.116    0.133    0.157    0.175
+## fit.common       0.137    0.302    0.151    0.164    0.187    0.205
+## fit.specific     0.042    0.168    0.151    0.164    0.187    0.205
+##              goodness-of-fit
+## fit.mvmean              poor
+## fit.common              poor
+## fit.specific            fair</code></pre>
+<p></p>
+</div>
+<div id="part-4-some-commonly-performed-analysis" class="section level2">
+<h2>Part 4: Some Commonly Performed Analysis</h2>
+<ol style="list-style-type: decimal">
+<li>results using conventional multiple-group SEM approach:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test1 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">FALSE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>results using conventional multiple-group SEM approach with mean structure tested by projection method:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test2 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">FALSE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">FALSE</span>,
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>results using equivalence testing:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test3 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>results using equivalence testing and adjusted cutoff values:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test4 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>analysis of 4 with mean structure tested by projection method:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test5 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, 
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>,
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>if any of the tests above evaluate only mean structure or only covariance structure, add the argument “structure = ‘mean’” or “structure = ‘covariance’”, say test5 with only mean structure:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test6 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, <span class="dt">structure =</span> <span class="st">'mean'</span>,
+    <span class="dt">sample.nobs =</span> <span class="kw">c</span>(<span class="dv">78</span>, <span class="dv">174</span>), <span class="dt">sample.cov =</span> <span class="kw">list</span>(Cov1, Cov2), 
+    <span class="dt">sample.mean =</span> <span class="kw">list</span>(M1, M2), <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>,
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li>if raw data are available, say the name of the raw data is ‘literacy.dat’ and the variable of group membership is ‘FRL’, then test5 is conducted as:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test7 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, <span class="dt">data =</span> literacy.dat, 
+    <span class="dt">group =</span> <span class="st">&quot;FRL&quot;</span>, <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>,
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="8" style="list-style-type: decimal">
+<li>when raw data are available and project method is used, bootstrap resampling can be used to obtain empirical p-values of the tests conducted by project method by enabling bootstrap = TRUE.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test8 &lt;- eqMI.main(model = model, data = literacy.dat, </span>
+<span class="co">#   group = &quot;FRL&quot;, meanstructure = TRUE, </span>
+<span class="co">#   equivalence.test = TRUE, adjRMSEA = TRUE,</span>
+<span class="co">#   projection = TRUE, bootstrap = TRUE)</span></code></pre></div>
+<ol start="9" style="list-style-type: decimal">
+<li>in any of the tests above, the users can turn out the printing of results (not recommended) though the results are still contained in test9$eqMI.stat:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test9 &lt;-<span class="st"> </span><span class="kw">eqMI.main</span>(<span class="dt">model =</span> model, <span class="dt">data =</span> literacy.dat, 
+    <span class="dt">group =</span> <span class="st">&quot;FRL&quot;</span>, <span class="dt">meanstructure =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">equivalence.test =</span> <span class="ot">TRUE</span>, <span class="dt">adjRMSEA =</span> <span class="ot">TRUE</span>,
+    <span class="dt">projection =</span> <span class="ot">TRUE</span>, <span class="dt">bootstrap =</span> <span class="ot">FALSE</span>,
+    <span class="dt">quite =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p></p>
+</div>
+<div id="part-5-arguments-of-the-eqmi.main-function" class="section level2">
+<h2>Part 5: Arguments of the eqMI.main() Function</h2>
+<p></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
