@@ -9,13 +9,13 @@
 #' \describe{
 #' \item{\code{fit.metric}}{test of metric invariance (factor loadings). This is a prerequisite for testing equality of latent means.}
 #' \item{\code{mvdif.test}}{t tests of the cross-group sample means for each variable.}
-#' \item{\code{chi.stat}}{Three chi-square tests for intercepts, common factors, and unique factors. \code{chi.stat} will be needed for equivalence testing. }
+#' \item{\code{chi.stat}}{Three chi-square tests for intercepts, common factors, and specific factors. \code{chi.stat} will be needed for equivalence testing.}
 #' \item{\code{common.test}}{t tests of common factors for each variable.}
-#' \item{\code{specific.test}}{t tests of unique factors for each variable.}
+#' \item{\code{specific.test}}{t tests of specific factors for each variable.}
 #' \item{\code{latent.test}}{t tests of latent means}
 #' \item{\code{V.index}}{validity index}
 #' \item{\code{Pmat}}{projection matrix of intercepts into the space of common factors}
-#' \item{\code{Qmat}}{projection matrix of intercepts into the space of unique factors}
+#' \item{\code{Qmat}}{projection matrix of intercepts into the space of specific factors}
 #' }
 #' @details Perform projection method for testing the equality of two latent means without requiring the cross-group intercepts to be the same. A validity index is provided as the proportion of the differences in manifest variables intercepts explained by latent mean differences as a gauge of the quality of measurements.
 #' @references Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
@@ -31,7 +31,7 @@
 #' L3 =~ V7 + V8
 #' L4 =~ V9 + V10 + V11
 #' '
-#' run.pj <- eqMI.projection(model = semmodel, data = HolzingerSwineford,
+#' run.proj <- eqMI.projection(model = semmodel, data = HolzingerSwineford,
 #'           group = "school", meanstructure = TRUE)
 #'
 eqMI.projection <- function(...) {
@@ -63,8 +63,11 @@ eqMI.projection <- function(...) {
   xbar_1 <- sample.means[[1]]
   xbar_2 <- sample.means[[2]]
   xbar_d <- xbar_2 - xbar_1
-  sigs <- lavTech(fit.metric, 'cov.ov')
+  #sigs <- lavTech(fit.metric, 'cov.ov')
+  sigs <- list(lavTech(fit.metric, 'sampstat')[[1]]$cov*sample.nobs[[1]]/(sample.nobs[[1]]-1), lavTech(fit.metric, 'sampstat')[[2]]$cov*sample.nobs[[2]]/(sample.nobs[[2]]-1))
   omega <- sigs[[1]]/sample.nobs[[1]] + sigs[[2]]/sample.nobs[[2]]
+  SD_1 <- sqrt(diag(sigs[[1]]))
+  SD_2 <- sqrt(diag(sigs[[2]]))
   SE_d <- sqrt(diag(omega))
 
   lamb <- lavTech(fit.metric,what="est")$lambda
@@ -94,7 +97,7 @@ eqMI.projection <- function(...) {
   pv_3 <- 1-pchisq(oT_mean3,df_mu)
 
   #output 2: tests of means of observed variables
-  mvdif.test <- data.frame(xbar_d=xbar_d, SE_d=SE_d, z_d=(xbar_d/SE_d))
+  mvdif.test <- data.frame(y_1 = xbar_1, y_2 = xbar_2, y_d=xbar_d, SE_d=SE_d, z_d=(xbar_d/SE_d))
   #output 3: chisquare tests of cross-group means, common scores, and specific scores
   proj.stat <- data.frame(Chisq=oT_all, Df=c(df_mu, df_tau, df_nu), pvalue=c(pv_3, pv_1, pv_2))
 
@@ -111,6 +114,7 @@ eqMI.projection <- function(...) {
   z_lamb <- hmud_lamb/SEd_lamb
   all_lamb <- data.frame(common_1=hmu1_lamb, common_2=hmu2_lamb,
                          common_d=hmud_lamb, SE_d=SEd_lamb, z_d=z_lamb)
+  rownames(all_lamb) <- varnames
 
   hmu1_nu <- Qmat_hlamb%*%xbar_1
   hmu2_nu <- Qmat_hlamb%*%xbar_2
@@ -118,8 +122,9 @@ eqMI.projection <- function(...) {
   sigd_nu <- Qmat_hlamb%*%omega%*%Qmat_hlamb
   SEd_nu <- sqrt(diag(sigd_nu))
   z_nu <- hmud_nu/SEd_nu
-  all_nu <- data.frame(unique_1=hmu1_nu, unique_2=hmu2_nu,
-                       unique_d=hmud_nu, SE_d=SEd_nu, z_d=z_nu)
+  all_nu <- data.frame(specific_1=hmu1_nu, specific_2=hmu2_nu,
+                       specific_d=hmud_nu, SE_d=SEd_nu, z_d=z_nu)
+  rownames(all_nu) <- varnames
 
   htau_1 <- Pmat_htau%*%xbar_1
   htau_2 <- Pmat_htau%*%xbar_2
@@ -127,12 +132,13 @@ eqMI.projection <- function(...) {
   sigd_tau <- Pmat_htau%*%omega%*%(t(Pmat_htau))
   SEd_tau <- sqrt(diag(sigd_tau))
   z_tau <- htau_d/SEd_tau
-  all_tau <- data.frame(latent_1=htau_1, latent_1=htau_2,
+  all_tau <- data.frame(latent_1=htau_1, latent_2=htau_2,
                         latent_d=htau_d, SE_d=SEd_tau, z_d=z_tau)
+  rownames(all_tau) <- facnames
 
   #validity index
-  nunu = t(hmud_nu)%*%hmud_nu
   tautau = t(hmud_lamb)%*%hmud_lamb
+  nunu = t(hmud_nu)%*%hmud_nu
   ratio = tautau/(nunu+tautau)
 
   return(list(fit.metric = fit.metric, mvdif.test = mvdif.test, chi.stat = proj.stat, common.test = all_lamb, specific.test = all_nu, latent.test = all_tau, V.index = ratio, Pmat = Pmat_hlamb, Qmat = Qmat_hlamb))
@@ -140,16 +146,14 @@ eqMI.projection <- function(...) {
 }
 
 
-#' Bootstrap procedure for projection-based latent means equality test
-#'
-#'
+#' Bootstrap procedure to test the equality of latent factor means using projection method
 #'
 #' @param ... The same arguments as for any lavaan model. See \code{lavaan::sem} for more information.
 #' @param bootstrap If bootstrap resampling is used to obtain empirical p-value of the statistics.
 #' @param B The number of bootstrap samples. Default at 100.
 #' @param seed The initial seed to generate bootstrap samples. Default at 111.
 #' @details Perform bootstrap procedure when testing the equality of latent means using projection method. Note that raw data must be available for bootstrap resampling to be performed. With the projection method, the cross-group intercepts are not required to be the same for further tests. If bootstrap resampling is used, the test statistics are not referred to chi-squared distributions but to bootstrapped empirical distributions for significance testing. Percentage bootstrap critical values are calculated. This process might be time-consuming if the model is complex or the number of bootstrap samples (B) is large.
-#' @return bootstrap p-values of the tests of common and unique factors.
+#' @return bootstrap p-values of the tests of common and specific factors.
 #' @references Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
 #' @importFrom stats pchisq
 #' @importFrom lavaan lavTech
@@ -165,7 +169,7 @@ eqMI.projection <- function(...) {
 #' L3 =~ V7 + V8
 #' L4 =~ V9 + V10 + V11
 #' '
-#' \dontrun{
+#' \donttest{
 #' run.bts <- eqMI.bootstrap(model = semmodel, data = HolzingerSwineford,
 #'           group = "school", meanstructure = TRUE, B = 100, seed = 111)
 #'}
@@ -186,7 +190,7 @@ eqMI.bootstrap <- function(..., B = 100, seed = 111) {
   if (length(sample.nobs)!=2) {
     stop("projection method only applies to two groups with this function")}
 
-  cat('bootstrap resampling...', '\n')
+  message('bootstrap resampling...', '\n')
 
   proj.res <- do.call(eqMI.projection, dotdotdot)
   fit.metric <- proj.res$fit.metric
@@ -221,10 +225,10 @@ eqMI.bootstrap <- function(..., B = 100, seed = 111) {
     dat_b[,-group.ind] <- rbind(y_b01, y_b02)
     dotdotdot$data <- dat_b
 
-    proj_b <- do.call(eqMI.projection, c(dotdotdot, details = T))
+    proj_b <- do.call(eqMI.projection, c(dotdotdot))
     stat_b[b, ] <- proj_b$chi.stat[2:3,1]
   }
-  cat('\n')
+  message('\n')
   stat.st <- apply(stat_b, 2, sort)
   pval1 <- 1 - findInterval(proj.res$chi.stat[2,1], stat.st[,1])/B
   pval2 <- 1 - findInterval(proj.res$chi.stat[3,1], stat.st[,2])/B

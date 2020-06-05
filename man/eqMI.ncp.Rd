@@ -35,7 +35,7 @@ m <- 2
 # A made-up likelihood-ratio statistic
 T_ml <- 8.824
 df <- 6
-eqMI.ncp(T = T_ml, df = df, N = N, m = m, alpha = alpha)
+ncp <- eqMI.ncp(T = T_ml, df = df, N = N, m = m, alpha = alpha)
 
 }
 \references{

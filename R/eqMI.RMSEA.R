@@ -7,6 +7,7 @@
 #' @param df Degree of freedom
 #' @return The adjusted cutoff values corresponding to conventional cutoff values .01, .05, .08, and .10.
 #' @details The adjusted cutoff values of RMSEA for equivalence testing can be obtained with \code{N, m, df} and transformed variables. Formulas are estimated using simulation studies and the coefficients are given in Table 11 of the reference.
+#' @references Steiger, J. H. (1980). Statistically based tests for the number of common factors. In the annual meeting of the Psychometric Society. Iowa City, IA.
 #' @references Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
 #' @export
 #' @examples
@@ -18,6 +19,7 @@
 #' eqMI.RMSEA(N = N, m = m, df = df);
 #'
 eqMI.RMSEA <- function(N, m, df){
+  if(!is.null(df) & df<0){df=1}
   RMSEA_cvec <- c(.01,.05,.08,.10);
   RMSEA_avec <- matrix(0,nrow = 1,ncol = 4);
   for (j in 1:4){

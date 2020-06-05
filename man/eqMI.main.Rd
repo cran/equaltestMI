@@ -4,9 +4,17 @@
 \alias{eqMI.main}
 \title{The main function to test measurement invariance}
 \usage{
-eqMI.main(..., output = "both", equivalence.test = TRUE, adjRMSEA = TRUE,
-  projection = FALSE, bootstrap = FALSE, quiet = FALSE, B = 100,
-  seed = 111)
+eqMI.main(
+  ...,
+  output = "both",
+  equivalence.test = TRUE,
+  adjRMSEA = TRUE,
+  projection = FALSE,
+  bootstrap = FALSE,
+  quiet = TRUE,
+  B = 100,
+  seed = 111
+)
 }
 \arguments{
 \item{...}{The same arguments as for any lavaan model. See \code{lavaan::sem} for more information.
@@ -23,7 +31,7 @@ Users must explicitly specify the name of the input elements for this function t
 
 \item{bootstrap}{If \code{bootstrap=TRUE}, bootstrap is used to obtain empirical p-values for testing the equality of cross-group latent factor means.}
 
-\item{quiet}{If \code{quiet=FALSE} (default), a summary is printed out containing an overview of the different models that are fitted, together with some model comparison tests and fit measures. The results of equivalence testing will also be printed if equivalence testing is used. If \code{quiet=TRUE}, no summary is printed but results will be stored in the object.}
+\item{quiet}{If \code{quiet=FALSE}, a summary is printed out containing an overview of the different models that are fitted, together with some model comparison tests and fit measures. The results of equivalence testing will also be printed if equivalence testing is used. If \code{quiet=TRUE} (default), no summary is printed but results will be stored in 'AnnotatedOutput'.}
 
 \item{B}{The number of boostrap samples used in bootstrap approach.}
 
@@ -32,9 +40,10 @@ Users must explicitly specify the name of the input elements for this function t
 \value{
 A list is returned with:
 \describe{
-\item{\code{convention.sem}}{Resulst of conventional multiple-group SEM using Lavaan. Returned object of \code{\link{eqMI.semtest}}.}
+\item{\code{AnnotatedOutput}}{Annotated outout that will be printed to the console if quiet==FALSE.}
+\item{\code{eqMI.stat}}{Test statistics, degrees of freedom, p-values, ncp, T-sizes, RMSEAs, their cutoff values, and the goodness-of-fit under equivalence testing. A formated version of \code{eqMI.stat} will be printed if \code{quiet=FALSE}.}
+\item{\code{convention.sem}}{Results of conventional multiple-group SEM using Lavaan. Returned object of \code{\link{eqMI.semtest}}.}
 \item{\code{projection.res}}{Results of projection methods on tests of latent means. Returned object of \code{\link{eqMI.projection}} and \code{\link{eqMI.bootstrap}}.}
-\item{\code{eqMI.stat}}{Test statistics, degrees of freedom, p-values, ncp, T-sizes, RMSEAs, their cutoff values, and the goodness-of-fit under equivalence testing. A formated version of \code{eqMI.stat} is printed if \code{quiet=FALSE}.}
 }
 }
 \description{
@@ -44,7 +53,7 @@ Test measurement invariance with equivalence testing, projection methods, and ad
 An all-in-one function with several added options to conduct a sequence of tests needed to evaluate MI. The chi-square statistics, except the one for testing the equality of covariance structure, are obtained based on \code{lavaan::sem} function. The test statistic of the covariance structure equality is obtained via the method of Lagrangian multiplier. Equivalence testing is enabled by setting \code{equivalence.test=TRUE} and this function will calculate T-size, RMSEA, and adjusted RMSEA cutoff values, and provide the goodness-of-fit.
 }
 \examples{
-\dontrun{
+\donttest{
 data(HolzingerSwineford)
 semmodel<-'
 L1 =~ V1 + V2 + V3
@@ -77,6 +86,8 @@ test <- eqMI.main(model = semmodel,
 }
 \references{
 Deng, L., & Yuan, K. H. (2016). Comparing Latent Means Without Mean Structure Models: A Projection-Based Approach. Psychometrika, 81(3), 802-829. https://doi.org/10.1007/s11336-015-9491-8
+
+Jiang, G., Mai, Y., & Yuan, K. H. (2017). Advances in Measurement Invariance and Mean Comparison of Latent Variables: Equivalence Testing and A Projection-Based Approach. Frontiers in Psychology, 8, 1823.
 
 Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426. https://doi.org/10.1037/met0000080
 }

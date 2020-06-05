@@ -16,13 +16,13 @@ A list is returned with:
 \describe{
 \item{\code{fit.metric}}{test of metric invariance (factor loadings). This is a prerequisite for testing equality of latent means.}
 \item{\code{mvdif.test}}{t tests of the cross-group sample means for each variable.}
-\item{\code{chi.stat}}{Three chi-square tests for intercepts, common factors, and unique factors. \code{chi.stat} will be needed for equivalence testing. }
+\item{\code{chi.stat}}{Three chi-square tests for intercepts, common factors, and specific factors. \code{chi.stat} will be needed for equivalence testing.}
 \item{\code{common.test}}{t tests of common factors for each variable.}
-\item{\code{specific.test}}{t tests of unique factors for each variable.}
+\item{\code{specific.test}}{t tests of specific factors for each variable.}
 \item{\code{latent.test}}{t tests of latent means}
 \item{\code{V.index}}{validity index}
 \item{\code{Pmat}}{projection matrix of intercepts into the space of common factors}
-\item{\code{Qmat}}{projection matrix of intercepts into the space of unique factors}
+\item{\code{Qmat}}{projection matrix of intercepts into the space of specific factors}
 }
 }
 \description{
@@ -39,7 +39,7 @@ L2 =~ V4 + V5 + V6
 L3 =~ V7 + V8
 L4 =~ V9 + V10 + V11
 '
-run.pj <- eqMI.projection(model = semmodel, data = HolzingerSwineford,
+run.proj <- eqMI.projection(model = semmodel, data = HolzingerSwineford,
           group = "school", meanstructure = TRUE)
 
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/eqMI.projection.R
 \name{eqMI.bootstrap}
 \alias{eqMI.bootstrap}
-\title{Bootstrap procedure for projection-based latent means equality test}
+\title{Bootstrap procedure to test the equality of latent factor means using projection method}
 \usage{
 eqMI.bootstrap(..., B = 100, seed = 111)
 }
@@ -16,10 +16,10 @@ eqMI.bootstrap(..., B = 100, seed = 111)
 \item{bootstrap}{If bootstrap resampling is used to obtain empirical p-value of the statistics.}
 }
 \value{
-bootstrap p-values of the tests of common and unique factors.
+bootstrap p-values of the tests of common and specific factors.
 }
 \description{
-Bootstrap procedure for projection-based latent means equality test
+Bootstrap procedure to test the equality of latent factor means using projection method
 }
 \details{
 Perform bootstrap procedure when testing the equality of latent means using projection method. Note that raw data must be available for bootstrap resampling to be performed. With the projection method, the cross-group intercepts are not required to be the same for further tests. If bootstrap resampling is used, the test statistics are not referred to chi-squared distributions but to bootstrapped empirical distributions for significance testing. Percentage bootstrap critical values are calculated. This process might be time-consuming if the model is complex or the number of bootstrap samples (B) is large.
@@ -32,7 +32,7 @@ L2 =~ V4 + V5 + V6
 L3 =~ V7 + V8
 L4 =~ V9 + V10 + V11
 '
-\dontrun{
+\donttest{
 run.bts <- eqMI.bootstrap(model = semmodel, data = HolzingerSwineford,
           group = "school", meanstructure = TRUE, B = 100, seed = 111)
 }

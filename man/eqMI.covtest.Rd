@@ -9,7 +9,7 @@ eqMI.covtest(..., lamb0 = NULL)
 \arguments{
 \item{...}{The same arguments as for any lavaan model. See \code{lavaan::sem} for more information.}
 
-\item{lamb0}{initial coefficients of Lagrangian multiplier. If not pre-specified, 0.01 will be used.}
+\item{lamb0}{initial coefficients of Lagrange multiplier. If not pre-specified, 0.01 will be used.}
 }
 \value{
 The likelihood ratio statistic, degrees of freedom, and p-value of the test.

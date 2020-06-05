@@ -4,7 +4,9 @@
 \name{HolzingerSwineford}
 \alias{HolzingerSwineford}
 \title{Holzinger and Swineford (1939) cognitive tests data in 301 children from two schools}
-\format{A data frame with 301 observations on 11 numeric variables and a group indicator (12 variables in total).}
+\format{
+A data frame with 301 observations on 11 numeric variables and a group indicator (12 variables in total).
+}
 \usage{
 data(HolzingerSwineford)
 }
@@ -14,7 +16,7 @@ This classic data set contains reported data on cognitive tests from two element
 \details{
 11 variables used in Deng and Yuan (2016) are included in this version of data, they are: visual perception, cubes, paper form board, paragraph comprehension, word classification, word meaning, counting dots, straight-curved capitals, deduction, problem reasoning, and series completion.
 
-This data set with more variables are available in other R packages such as lavaan, MBESS, and OpenMX.
+This data set with more variables are available in other R packages such as lavaan, and OpenMX.
 }
 \examples{
 data(HolzingerSwineford)
@@ -25,6 +27,6 @@ Deng, L., & Yuan, K. H. (2016). Comparing Latent Means Without Mean Structure Mo
 Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
 }
 \seealso{
-\code{\link[lavaan]{HolzingerSwineford1939}}, \code{\link[MBESS]{HS.data}}, \code{\link[OpenMx]{HS.ability.data}}
+\code{\link[lavaan]{HolzingerSwineford1939}}, \code{\link[OpenMx]{HS.ability.data}}
 }
-\keyword{datasets}
+\keyword{HS}

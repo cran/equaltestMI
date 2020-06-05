@@ -32,5 +32,7 @@ eqMI.RMSEA(N = N, m = m, df = df);
 
 }
 \references{
+Steiger, J. H. (1980). Statistically based tests for the number of common factors. In the annual meeting of the Psychometric Society. Iowa City, IA.
+
 Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
 }

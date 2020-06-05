@@ -21,7 +21,7 @@
 #' # A made-up likelihood-ratio statistic
 #' T_ml <- 8.824
 #' df <- 6
-#' eqMI.ncp(T = T_ml, df = df, N = N, m = m, alpha = alpha)
+#' ncp <- eqMI.ncp(T = T_ml, df = df, N = N, m = m, alpha = alpha)
 #'
 eqMI.ncp <- function(T, df, N, m, alpha = 0.05){
   z <- qnorm(1-alpha)
@@ -30,29 +30,33 @@ eqMI.ncp <- function(T, df, N, m, alpha = 0.05){
   z4 <- z3*z
   z5 <- z4*z
   sig2 <- 2*(2*T-df+2)
-  sig <- sqrt(sig2)
-  sig3 <- sig*sig2
-  sig4 <- sig2*sig2
-  sig5 <- sig4*sig
-  sig6 <- sig2*sig4
+  if(!is.na(sig2) & sig2<0){
+    delta <- 0
+  } else {
+    sig <- sqrt(sig2)
+    sig3 <- sig*sig2
+    sig4 <- sig2*sig2
+    sig5 <- sig4*sig
+    sig6 <- sig2*sig4
 
-  delta <- T-df+2+sig*
-    (
-      z+(z2-1)/sig-z/sig2 + 2*(df-1)*(z2-1)/(3*sig3)
-      +( -(df-1)*(4*z3-z)/6+(df-2)*z/2 )/sig4
-      +4*(df-1)*(3*z4+2*z2-11)/(15*sig5)
-      +(
-        -(df-1)*(96*z5+164*z3-767*z)/90-4*(df-1)*(df-2)*(2*z3-5*z)/9
-        +(df-2)*z/2
-      )/sig6
-    )
-  delta <- max(delta,0)
+    delta <- T-df+2+sig*
+      (
+        z+(z2-1)/sig-z/sig2 + 2*(df-1)*(z2-1)/(3*sig3)
+        +( -(df-1)*(4*z3-z)/6+(df-2)*z/2 )/sig4
+        +4*(df-1)*(3*z4+2*z2-11)/(15*sig5)
+        +(
+          -(df-1)*(96*z5+164*z3-767*z)/90-4*(df-1)*(df-2)*(2*z3-5*z)/9
+          +(df-2)*z/2
+        )/sig6
+      )
+    delta <- max(delta,0)
+  }
   epsilon_t <- delta/(N-m)
   RMSEA_t <- sqrt(m*epsilon_t/df)
 
-  #cat("noncentrality parameter ncp = ", delta, "\n")
-  #cat("minimum tolerable size = ", epsilon_t, "\n")
-  #cat("RMSEA_t under equivalence testing = ", RMSEA_t, "\n")
+  #message("noncentrality parameter ncp = ", delta, "\n")
+  #message("minimum tolerable size = ", epsilon_t, "\n")
+  #message("RMSEA_t under equivalence testing = ", RMSEA_t, "\n")
 
   return(list(epsilon_t = epsilon_t, RMSEA_t = RMSEA_t))
 }

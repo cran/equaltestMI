@@ -1,37 +1,60 @@
 ---
-title: "Supplementary Materials to “Measurement Invariance Via Equivalence Testing”"
+title: "Measurement Invariance via Equivalence Testing and Projection Method"
 author: "Ge Jiang, Yujiao Mai, and Ke-Hai Yuan"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Supplementary Materials to “Measurement Invariance Via Equivalence Testing}
+  %\VignetteIndexEntry{Supplementary_Materials}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ## Introduction
 
-The supplementary materials illustrate the use of the accompanying R package equaltestMI. The sample statistics from Table 1 of Lee and Al Otaiba (2015) are used as an example. The description of the data can be found in the original article and the results obtained from equaltestMI are discussed at length in the submitted article “Measurement Invariance Via Equivalence Testing”. 
+This supplementary document illustrates the use of the accompanying R package equaltestMI. The sample statistics from Table 1 of Lee and Al Otaiba (2015) are used as an example. The description of the data can be found in the original article and the results obtained from equaltestMI are discussed at length in the published article “Advances in Measurement Invariance and Mean Comparison of Latent Variables: Equivalence Testing and A Projection-Based Approach” <DOI: 10.3389/fpsyg.2017.01823>.
 
-The R package equaltestMI is available on CRAN and can be downloaded for use on any R platform with version higher than 3.1.0. Users can pass different arguments to the main function eqMI.main() to examine measurement invariance using the conventional multiple-group approach or equivalence testing approach. Under the framework of equivalence testing, users obtain the minimum tolerable size (T-size) and adjusted cutoff values to evaluate the goodness-of-fit of each invariance test. The projection method is also available for testing the equality of latent means.
+The R package equaltestMI is available on CRAN and can be downloaded for use on any R platform with version higher than 3.1.0. Users can pass different arguments to the main function eqMI.main() to examine measurement invariance using the conventional multiple-group approach (NHT) or equivalence testing (ET) approach. Under the framework of equivalence testing, users obtain the minimum tolerable size (T-size) and adjusted cutoff values to evaluate the goodness-of-fit of each invariance test. The projection method is also available for testing the equality of latent means.
 
-\newline
+## Important Notes:
 
-## Part 1: R Script for Obtaining Results from Equivalence Testing and Projection Method
+This package is developed for complete dataset with two groups/time points. Use of saturated models might lead to problems in calculation of adjusted RMSEA thresholds. Please consider alternative methods if you have datasets that do not satisfy the requirements. 
 
-```{r cars, message=FALSE}
+
+
+## Part 0: Installation
+
+Users can install the package from CRAN:
+
+```{r setup, message=FALSE, warning=FALSE}
 ## load package
+# install.packages("equaltestMI")
 library(equaltestMI)
 ```
 
-\newline
+or install the most recent version from the maintainer's GitHub repository:
+
+```{r setup2, message=FALSE, warning=FALSE}
+# install.packages("devtools")
+# library(devtools)
+# devtools::install_github("gabriellajg/equaltestMI", force=TRUE)
+library(equaltestMI)
+```
+
+
+## Part 1: R Script for Obtaining Results from Equivalence Testing and Projection Method
+
+
 
 ```{r}
-## sample statistics where M1 and M2 are sample means, and Cov1 and Cov2 are sample covariance matrices;
+## sample statistics where M1 and M2 are sample means
+## Cov1 and Cov2 are sample covariance matrices;
 ## group 1 = boys ineligible for free-reduced lunches
 ## group 2 = boys eligible for free-reduced lunches
-
-#setwd("C:/research/equaltestMI")
 Group1 <- read.table('Group1.txt', header = TRUE)
 Group2 <- read.table('Group2.txt', header = TRUE)
 Group1 <- as.matrix(Group1)
@@ -52,7 +75,7 @@ Spelling =~ Real_Words + Pseudo_Words
 '
 ```
 
-\newline
+
 
 ```{r, eval=FALSE}
 ## the results using equivalence testing and projection method
@@ -64,12 +87,12 @@ test <- eqMI.main(model = model,
 	sample.cov = list(Cov1, Cov2),
 	meanstructure = TRUE, 
 	output = 'both', 
-	quiet = FALSE, 	
+	quiet = TRUE, 	
 	equivalence.test = TRUE, adjRMSEA = TRUE, 
 	projection = TRUE, bootstrap = FALSE)
 ```
 
-\newline
+
 
 ## Part 2: Sample Means and Covariance Matrices of the Example Data
 
@@ -87,7 +110,7 @@ Sample Covariance Matrix:
 round(Cov1, 3)
 ```
 
-\newline
+
 
 ### Sample statistics for boys eligible for free-reduced lunches (group 2):
 
@@ -103,7 +126,7 @@ Sample Covariance Matrix:
 round(Cov2, 3)
 ```
 
-\newline
+
 
 ## Part 3: Full R Output of the “test” object in Part 1
 
@@ -120,7 +143,7 @@ test <- eqMI.main(model = model,
 	projection = TRUE, bootstrap = FALSE)
 ```
 
-\newline
+
 
 ## Part 4: Some Commonly Performed Analysis
 
@@ -193,13 +216,13 @@ test7 <- eqMI.main(model = model, data = literacy.dat,
 8. when raw data are available and project method is used, bootstrap resampling can be used to obtain empirical p-values of the tests conducted by project method by enabling bootstrap = TRUE. 
 
 ```{r, eval=FALSE}
-#test8 <- eqMI.main(model = model, data = literacy.dat, 
-#	group = "FRL", meanstructure = TRUE, 
-#	equivalence.test = TRUE, adjRMSEA = TRUE,
-#	projection = TRUE, bootstrap = TRUE)
+test8 <- eqMI.main(model = model, data = literacy.dat, 
+	group = "FRL", meanstructure = TRUE, 
+	equivalence.test = TRUE, adjRMSEA = TRUE,
+	projection = TRUE, bootstrap = TRUE)
 ```
 
-9. in any of the tests above, the users can turn out the printing of results (not recommended) though the results are still contained in test9$eqMI.stat:
+9. in any of the tests above, the users can suppress the printing of results (not recommended) though the results are still contained in test9$eqMI.stat:
 
 ```{r, eval=FALSE}
 test9 <- eqMI.main(model = model, data = literacy.dat, 
@@ -209,31 +232,43 @@ test9 <- eqMI.main(model = model, data = literacy.dat,
 	quite = TRUE)
 ```
 
-\newline
+10. in any of the tests above, the users can allow partial invariance by adding 'group.partial':
 
-## Part 5: Arguments of the eqMI.main() Function
-
-\newline
-
-```{r, echo=FALSE}
-help_console <- function(topic, format=c("text", "html", "latex", "Rd"),
-                         lines=NULL, before=NULL, after=NULL, package = NULL) {  
-  format=match.arg(format)
-  if (!is.character(topic)) topic <- deparse(substitute(topic))
-  helpfile = utils:::.getHelpFile(help(topic, package = (package)))
-
-  hs <- capture.output(switch(format, 
-                              text=tools:::Rd2txt(helpfile),
-                              html=tools:::Rd2HTML(helpfile),
-                              latex=tools:::Rd2latex(helpfile),
-                              Rd=tools:::prepare_Rd(helpfile)
-                              )
-                      )
-  if(!is.null(lines)) hs <- hs[lines]
-  hs <- c(before, hs, after)
-  cat(hs, sep="\n")
-  invisible(hs)
-}
-#help_console(eqMI.main, package = 'equaltestMI')
+```{r, eval=FALSE}
+test10 <- eqMI.main(model = model, data = literacy.dat, 
+	group = "FRL", meanstructure = TRUE, 
+	group.partial = c("Spelling=~Real_Words", "Blending~1"),
+	equivalence.test = TRUE, adjRMSEA = TRUE,
+	projection = TRUE)
 ```
 
+so that the loadings of 'Spelling' on 'Real_Words' and the intercept of 'Blending' are allowed to vary across groups. 
+
+
+## Part 5: Help page of the eqMI.main() function
+
+For a complete view of the help page of function eqMI.main(), please install R package printr and type ?eqMI.main in R console:
+
+```{r, echo=FALSE}
+library(printr) 
+?eqMI.main
+```
+
+
+
+
+
+
+```{r, include=FALSE}
+
+# For a complete view of the help page of function eqMI.main(), please install R package printr and type ?eqMI.main in R console:
+
+#library(printr) 
+#?eqMI.main
+
+#output: pdf_document
+#devtools::build_vignettes()
+#R CMD Rd2pdf "~/Box Sync/MacSync/Research/Frontier/equaltestMI"
+#R CMD check --as-cran equaltestMI_0.6.0.tar.gz
+#https://bookdown.org/yihui/rmarkdown-cookbook/package-vignette.html
+```

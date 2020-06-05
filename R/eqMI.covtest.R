@@ -3,7 +3,7 @@
 #' The first step of testing measurement invariance (MI) in multiple-group SEM analysis. The null hypothesis is tested using the method of Lagrange multipliers
 #'
 #' @param ... The same arguments as for any lavaan model. See \code{lavaan::sem} for more information.
-#' @param lamb0 initial coefficients of Lagrangian multiplier. If not pre-specified, 0.01 will be used.
+#' @param lamb0 initial coefficients of Lagrange multiplier. If not pre-specified, 0.01 will be used.
 #' @return The likelihood ratio statistic, degrees of freedom, and p-value of the test.
 #' @details The \code{eqMI.covtest} function is the first step to test MI. Under null hypothesis testing (NHT), a non-significant statistic is generally an overall endorsement of MI. If the null hypothesis is rejected then one may proceed to test other aspects of MI.
 #' @references Yuan, K. H., & Chan, W. (2016). Measurement invariance via multigroup SEM: Issues and solutions with chi-square-difference tests. Psychological methods, 21(3), 405-426.
@@ -41,6 +41,9 @@ eqMI.covtest <- function(..., lamb0=NULL){
     sample.cov <- lapply(dat.by.group, cov)
     sample.nobs <- sapply(dat.by.group, nrow)
   }
+  #no missing data or NA in sample.cov
+  if(sum(is.na(sample.cov[[1]])+is.na(sample.cov[[2]]))>1)
+    stop("Check missing data in raw data or NAs in the sample covariances")
   if (length(sample.nobs)!=2)
     stop("projection method only applies to two groups with this function")
 
