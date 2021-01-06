@@ -16,40 +16,25 @@ library(equaltestMI)
 library(equaltestMI)
 
 ## -----------------------------------------------------------------------------
-## sample statistics where M1 and M2 are sample means
-## Cov1 and Cov2 are sample covariance matrices;
-## group 1 = boys ineligible for free-reduced lunches
-## group 2 = boys eligible for free-reduced lunches
-Group1 <- read.table('Group1.txt', header = TRUE)
-Group2 <- read.table('Group2.txt', header = TRUE)
-Group1 <- as.matrix(Group1)
-Group2 <- as.matrix(Group2)
-M1 <- Group1[1,]
-M2 <- Group2[1,]
-Cov1 <- Group1[2:7,]
-Cov2 <- Group2[2:7,]
+data(LeeAlOtaiba)
+# contains sample covariance matrices and sample means of four groups
 
 ## -----------------------------------------------------------------------------
-## lavaan model syntax
-model <- '
-AlphabetKnowledge =~ Letter_Name+ Letter_Sound
-PhonologicalAwareness =~ Blending + Elision
-Spelling =~ Real_Words + Pseudo_Words
-'
+## group 1 = boys ineligible for free-reduced lunches
+Group1 <- LeeAlOtaiba$BoysIneligible
+Group1 <- as.matrix(Group1)
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  ## the results using equivalence testing and projection method
-#  ## full R output will be presented in Part 3
-#  
-#  test <- eqMI.main(model = model,
-#  	sample.nobs = c(78, 174),
-#  	sample.mean = list(M1, M2),
-#  	sample.cov = list(Cov1, Cov2),
-#  	meanstructure = TRUE,
-#  	output = 'both',
-#  	quiet = TRUE, 	
-#  	equivalence.test = TRUE, adjRMSEA = TRUE,
-#  	projection = TRUE, bootstrap = FALSE)
+## group 2 = boys eligible for free-reduced lunches
+Group2 <- LeeAlOtaiba$BoysEligible
+Group2 <- as.matrix(Group2)
+
+# sample means:
+M1 <- Group1[1,]
+M2 <- Group2[1,]
+
+# sample covariance matrices:
+Cov1 <- Group1[2:7,]
+Cov2 <- Group2[2:7,]
 
 ## ---- echo=FALSE--------------------------------------------------------------
 M1
@@ -62,6 +47,27 @@ M2
 
 ## ---- echo=FALSE--------------------------------------------------------------
 round(Cov2, 3)
+
+## -----------------------------------------------------------------------------
+## lavaan model syntax
+model <- '
+AlphabetKnowledge =~ Letter_Name+ Letter_Sound
+PhonologicalAwareness =~ Blending + Elision
+Spelling =~ Real_Words + Pseudo_Words
+'
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  ## the results using equivalence testing and projection method
+#  ## full R output will be presented in Part 3
+#  test <- eqMI.main(model = model,
+#  	sample.nobs = c(78, 174),
+#  	sample.mean = list(M1, M2),
+#  	sample.cov = list(Cov1, Cov2),
+#  	meanstructure = TRUE,
+#  	output = 'both',
+#  	quiet = TRUE, 	
+#  	equivalence.test = TRUE, adjRMSEA = TRUE,
+#  	projection = TRUE, bootstrap = FALSE)
 
 ## ---- echo=FALSE--------------------------------------------------------------
 ## the results using equivalence testing and projection method
